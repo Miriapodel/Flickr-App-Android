@@ -32,6 +32,11 @@ public class GetRawData extends AsyncTask<String, Void, String>
         this.callBack = callBack;
     }
 
+    public void executeInSameThread(String s)
+    {
+        onPostExecute(doInBackground(s));
+    }
+
     @Override
     protected void onPostExecute(String s) {
         Log.d(TAG, "onPostExecute: The parameter was: " + s);

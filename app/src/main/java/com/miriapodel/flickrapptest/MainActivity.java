@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements GetRawData.OnDownloadComplete {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable {
 
     private static final String TAG = "MainActivity";
 
@@ -16,18 +18,26 @@ public class MainActivity extends AppCompatActivity implements GetRawData.OnDown
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GetRawData getRawData = new GetRawData(this);
-        getRawData.execute("https://www.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=1");
-
         Log.d(TAG, "onCreate: ends");
     }
 
     @Override
-    public void onDownloadComplete(String data, DownloadStatus status)
+    protected void onResume() {
+        Log.d(TAG, "onResume: starts");
+        super.onResume();
+
+        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData("en-us", "https://www.flickr.com/services/feeds/photos_public.gne", true, this );
+        getFlickrJsonData.execute("android, nougat");
+
+        Log.d(TAG, "onResume: ends");
+    }
+
+    @Override
+    public void onDataAvailable(ArrayList<Photo> photos, DownloadStatus status)
     {
         if(status == DownloadStatus.OK)
         {
-            Log.d(TAG, "onDownloadComplete: The data is: " + data);
+            Log.d(TAG, "onDownloadComplete: The data is: " + photos.toString());
         }
         else
         {
