@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class GetFlickrJsonData implements GetRawData.OnDownloadComplete
@@ -65,7 +66,8 @@ public class GetFlickrJsonData implements GetRawData.OnDownloadComplete
             photos = new ArrayList<>();
 
             try {
-                JSONArray jsonArray = new JSONArray(data);
+                JSONObject jsonObject = new JSONObject(data)
+                JSONArray jsonArray = jsonObject.getJSONArray("items");
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject photo = jsonArray.getJSONObject(i);
