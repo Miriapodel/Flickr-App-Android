@@ -107,7 +107,7 @@ public class GetFlickrJsonData extends AsyncTask<String, Void, ArrayList<Photo>>
                     String author = photo.getString("author");
                     String author_id = photo.getString("author_id");
                     String title = photo.getString("title");
-                    String image = photo.getString("m");
+                    String image = media.getString("m");
                     String link = image.replaceFirst("_m.", "_b.");
                     String tags = photo.getString("tags");
 
