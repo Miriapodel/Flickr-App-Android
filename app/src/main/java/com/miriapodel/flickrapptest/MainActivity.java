@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable {
+public class MainActivity extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
 
     private static final String TAG = "MainActivity";
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, this));
 
         Log.d(TAG, "onCreate: ends");
     }
@@ -63,5 +66,23 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
         {
             Log.e(TAG, "onDownloadComplete: Unable to complete download: " + status);
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+        Log.d(TAG, "onItemClick: starts");
+
+        Toast.makeText(this, "Normal tap at position: " + position, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position) {
+
+        Log.d(TAG, "onItemLongClick: starts");
+
+        Toast.makeText(this, "Long tap at position: " + position, Toast.LENGTH_SHORT).show();
+
     }
 }
