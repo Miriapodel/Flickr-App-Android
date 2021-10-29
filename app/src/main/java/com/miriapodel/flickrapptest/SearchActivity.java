@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.miriapodel.flickrapptest.databinding.ActivitySearchBinding;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivitySearchBinding binding;
@@ -27,7 +27,7 @@ public class SearchActivity extends AppCompatActivity {
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+       activateToolbar(true);
 
     }
 

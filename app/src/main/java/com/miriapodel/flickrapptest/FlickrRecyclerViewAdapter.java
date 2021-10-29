@@ -80,4 +80,9 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrRecycl
 
         notifyDataSetChanged();
     }
+
+    public Photo getItem(int position)
+    {
+        return photos.get(position);
+    }
 }

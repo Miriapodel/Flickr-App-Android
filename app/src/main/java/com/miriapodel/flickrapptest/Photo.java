@@ -1,6 +1,8 @@
 package com.miriapodel.flickrapptest;
 
-public class Photo
+import java.io.Serializable;
+
+public class Photo implements Serializable
 {
     String author;
     String author_id;

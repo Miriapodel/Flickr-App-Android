@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
+public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
 
     private static final String TAG = "MainActivity";
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        activateToolbar(false);
 
         initVar();
 
@@ -83,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
         Log.d(TAG, "onItemLongClick: starts");
 
         Toast.makeText(this, "Long tap at position: " + position, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, PhotoDetailsActivity.class);
+        intent.putExtra(PHOTO_TRANSFER, adapter.getItem(position));
+
+        startActivity(intent);
 
     }
 }

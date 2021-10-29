@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.miriapodel.flickrapptest.databinding.ActivityPhotoDetailsBinding;
 
-public class PhotoDetailsActivity extends AppCompatActivity {
+public class PhotoDetailsActivity extends BaseActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityPhotoDetailsBinding binding;
@@ -27,7 +27,7 @@ public class PhotoDetailsActivity extends AppCompatActivity {
         binding = ActivityPhotoDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+       activateToolbar(true);
 
 
     }
