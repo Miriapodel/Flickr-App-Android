@@ -86,6 +86,7 @@ public class GetFlickrJsonData extends AsyncTask<String, Void, ArrayList<Photo>>
                 .appendQueryParameter("tagmode", matchAll ? "ALL" : "ANY")
                 .appendQueryParameter("lang", language)
                 .appendQueryParameter("nojsoncallback", "1")
+                .appendQueryParameter("format", "json")
                 .build().toString();
     }
 

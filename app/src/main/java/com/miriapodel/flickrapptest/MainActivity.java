@@ -1,6 +1,8 @@
 package com.miriapodel.flickrapptest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,10 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
 
     private static final String TAG = "MainActivity";
 
+    private RecyclerView recyclerView;
+
+    private FlickrRecyclerViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: starts");
@@ -18,7 +24,19 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initVar();
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         Log.d(TAG, "onCreate: ends");
+    }
+
+    private void initVar()
+    {
+        recyclerView = findViewById(R.id.recyclerView);
+
+        adapter = new FlickrRecyclerViewAdapter(this);
     }
 
     @Override
@@ -38,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
         if(status == DownloadStatus.OK)
         {
             Log.d(TAG, "onDownloadComplete: The data is: " + photos.toString());
+
+            adapter.setPhotos(photos);
         }
         else
         {
