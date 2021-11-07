@@ -14,13 +14,27 @@
         <activity
             android:name=".PhotoDetailsActivity"
             android:exported="true"
+            android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_photo_details"
             android:theme="@style/Theme.FlickrAppTest.NoActionBar" />
         <activity
             android:name=".SearchActivity"
             android:exported="true"
+            android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_search"
-            android:theme="@style/Theme.FlickrAppTest.NoActionBar" />
+            android:theme="@style/Theme.FlickrAppTest.NoActionBar">
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"
+                />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

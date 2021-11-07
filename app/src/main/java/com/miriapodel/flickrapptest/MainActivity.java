@@ -1,13 +1,19 @@
 package com.miriapodel.flickrapptest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,6 +23,8 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
     private static final String TAG = "MainActivity";
 
     private RecyclerView recyclerView;
+
+    private TextView noPhotos;
 
     private FlickrRecyclerViewAdapter adapter;
 
@@ -43,6 +51,8 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
         recyclerView = findViewById(R.id.recyclerView);
 
         adapter = new FlickrRecyclerViewAdapter(this);
+
+        noPhotos = findViewById(R.id.no_photo);
     }
 
     @Override
@@ -50,8 +60,21 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
         Log.d(TAG, "onResume: starts");
         super.onResume();
 
-        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData("en-us", "https://www.flickr.com/services/feeds/photos_public.gne", true, this );
-        getFlickrJsonData.execute("android, nougat");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String searchTag = sharedPreferences.getString(FLICKR_QUERY, "");
+
+        if(searchTag.length() > 0)
+        {
+            GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData("en-us", "https://www.flickr.com/services/feeds/photos_public.gne", true, this );
+            getFlickrJsonData.execute(searchTag);
+
+            noPhotos.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            noPhotos.setVisibility(View.VISIBLE);
+        }
 
         Log.d(TAG, "onResume: ends");
     }
@@ -64,6 +87,15 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
             Log.d(TAG, "onDownloadComplete: The data is: " + photos.toString());
 
             adapter.setPhotos(photos);
+
+            if(adapter.getItemCount() > 0)
+            {
+                noPhotos.setVisibility(View.INVISIBLE);
+            }
+            else
+            {
+                noPhotos.setVisibility(View.VISIBLE);
+            }
         }
         else
         {
@@ -92,5 +124,28 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
 
         startActivity(intent);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int itemID = item.getItemId();
+
+        if(itemID == R.id.search_menu)
+        {
+            Intent intent = new Intent(this, SearchActivity.class);
+
+            startActivity(intent);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
     }
 }
