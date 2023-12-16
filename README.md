@@ -1,6 +1,6 @@
 # Flickr App
 
-Proiectul este o reproducere a aplicatiei Flickr (https://www.flickr.com/).
+Proiectul este o reproducere a aplicatiei Flickr (https://www.flickr.com/) facuta in Java pentru dispozitive mobile cu Android.
 
 ## Descriere
 
